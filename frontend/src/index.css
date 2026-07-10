@@ -11,22 +11,22 @@ body {
   --font-display: 'Outfit', sans-serif;
 
   /* Strict Dark Theme Colors based on requirements */
-  --color-background: hsl(224 41% 7%); /* #0B0F1A */
+  --color-background: #111827; /* #0B0F1A */
   --color-foreground: hsl(210 40% 98%);
   
-  --color-card: hsl(222 39% 11%); /* #111827 */
+  --color-card: #1F2937; /* #111827 */
   --color-card-foreground: hsl(210 40% 98%);
   
   --color-popover: hsl(222 39% 11%);
   --color-popover-foreground: hsl(210 40% 98%);
   
-  --color-primary: hsl(262 83% 58%); /* #7C3AED */
+  --color-primary: #FBBF24; /* #7C3AED */
   --color-primary-foreground: hsl(210 40% 98%);
   
-  --color-secondary: hsl(327 82% 60%); /* #EC4899 */
+  --color-secondary: #EF4444; /* #EC4899 */
   --color-secondary-foreground: hsl(210 40% 98%);
   
-  --color-muted: hsl(217 33% 17%);
+  --color-muted: #374151;
   --color-muted-foreground: hsl(215 20% 65%); /* #9CA3AF */
   
   --color-accent: hsl(217 33% 17%);
@@ -35,9 +35,9 @@ body {
   --color-destructive: hsl(0 84% 60%);
   --color-destructive-foreground: hsl(210 40% 98%);
 
-  --color-border: hsl(215 19% 27% / 0.3); /* #374151/30 */
+  --color-border: rgba(251,191,36,.18); /* #374151/30 */
   --color-input: hsl(215 19% 27% / 0.5);
-  --color-ring: hsl(262 83% 58%);
+  --color-ring: #FBBF24;
 
   /* Match Colors */
   --color-match-high: hsl(160 84% 39%); /* #10B981 */
@@ -63,8 +63,18 @@ body {
   body {
     @apply bg-background text-foreground antialiased font-sans overflow-x-hidden;
     /* Subtle radial gradient background as requested */
-    background-image: radial-gradient(circle at top left, rgba(124, 58, 237, 0.16), transparent 35%),
-                      radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.1), transparent 35%);
+    background-image:
+radial-gradient(circle at top left,
+rgba(251,191,36,.18),
+transparent 35%),
+
+radial-gradient(circle at center,
+rgba(239,68,68,.10),
+transparent 45%),
+
+radial-gradient(circle at bottom right,
+rgba(55,65,81,.25),
+transparent 40%);
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -96,12 +106,13 @@ body {
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent;
   }
   
   .glass-panel {
-    @apply bg-card/80 backdrop-blur-xl border border-white/5 shadow-2xl;
-  }
+    @apply bg-card/85 backdrop-blur-xl shadow-2xl;
+    border:1px solid rgba(251,191,36,.08);
+}
 
   .pulse-ring {
     animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
