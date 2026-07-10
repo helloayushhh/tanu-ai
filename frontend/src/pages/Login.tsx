@@ -22,7 +22,7 @@ export function Login() {
         setLocation("/jobs");
       },
       onError: () => {
-        setAuth("mock-token", { id: "1", email, name: "Test User" });
+        setAuth("mock-token", { id: "1", email, name: "Guest" });
         setLocation("/jobs");
       }
     });
@@ -65,10 +65,10 @@ export function Login() {
               </div>
 
               <h1 className="text-3xl font-bold text-white mb-2">
-                Welcome Back
+                Welcome to Tanu
               </h1>
               <p className="text-white/70 text-center">
-                Login to your Smart AI Job Tracker
+                Welcome back! Tanu is ready to help you land your next opportunity.
               </p>
             </div>
 
@@ -110,9 +110,9 @@ export function Login() {
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white"
                   disabled={loginMutation.isPending}
                 >
-                  {loginMutation.isPending ? "Authenticating..." : (
+                  {loginMutation.isPending ? "Tanu is getting things ready..." : (
                     <>
-                      Sign In 
+                      Continue with Tanu
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </>
                   )}
