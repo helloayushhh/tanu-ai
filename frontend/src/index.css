@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* Optional custom styles */
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+@theme inline {
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  /* Strict Dark Theme Colors based on requirements */
+  --color-background: hsl(224 41% 7%); /* #0B0F1A */
+  --color-foreground: hsl(210 40% 98%);
+  
+  --color-card: hsl(222 39% 11%); /* #111827 */
+  --color-card-foreground: hsl(210 40% 98%);
+  
+  --color-popover: hsl(222 39% 11%);
+  --color-popover-foreground: hsl(210 40% 98%);
+  
+  --color-primary: hsl(262 83% 58%); /* #7C3AED */
+  --color-primary-foreground: hsl(210 40% 98%);
+  
+  --color-secondary: hsl(327 82% 60%); /* #EC4899 */
+  --color-secondary-foreground: hsl(210 40% 98%);
+  
+  --color-muted: hsl(217 33% 17%);
+  --color-muted-foreground: hsl(215 20% 65%); /* #9CA3AF */
+  
+  --color-accent: hsl(217 33% 17%);
+  --color-accent-foreground: hsl(210 40% 98%);
+  
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+
+  --color-border: hsl(215 19% 27% / 0.3); /* #374151/30 */
+  --color-input: hsl(215 19% 27% / 0.5);
+  --color-ring: hsl(262 83% 58%);
+
+  /* Match Colors */
+  --color-match-high: hsl(160 84% 39%); /* #10B981 */
+  --color-match-medium: hsl(45 93% 47%); /* #FBBF24 */
+  --color-match-low: hsl(220 9% 46%); /* #6B7280 */
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased font-sans overflow-x-hidden;
+    /* Subtle radial gradient background as requested */
+    background-image: radial-gradient(circle at top left, rgba(124, 58, 237, 0.16), transparent 35%),
+                      radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.1), transparent 35%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  .bg-card {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+  }
+  .text-muted-foreground { color: #d1d5db !important; }
+  .text-white { color: #ffffff !important; }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Custom Scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .glass-panel {
+    @apply bg-card/80 backdrop-blur-xl border border-white/5 shadow-2xl;
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(124, 58, 237, 0); }
+  100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+/* Custom Range Slider Styling */
+input[type=range] {
+  -webkit-appearance: none;
+  @apply w-full h-2 bg-muted rounded-full outline-none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  @apply w-5 h-5 rounded-full bg-primary cursor-pointer shadow-lg border-2 border-background transition-transform hover:scale-110;
+}
+
+input[type=range]::-moz-range-thumb {
+  @apply w-5 h-5 rounded-full bg-primary cursor-pointer shadow-lg border-2 border-background transition-transform hover:scale-110;
+}

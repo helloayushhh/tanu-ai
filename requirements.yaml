@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For fluid page transitions, AI chat expansion, and hover effects"
+  "zustand": "Global state management for auth, filters, and chat UI"
+  "date-fns": "Formatting application timeline dates and job posting times"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility to resolve Tailwind CSS class conflicts"
+  "react-markdown": "To render formatted AI responses in the chat bubble"
+
+images:
+  - path: "artifacts/job-tracker/public/images/auth-bg.png"
+    description: "Abstract dark futuristic background with deep indigo and magenta glowing gradients, geometric mesh patterns, professional and slick"
+    aspect_ratio: "16:9"
+  - path: "artifacts/job-tracker/public/images/logo-icon.png"
+    description: "Minimalist glowing geometric logo mark featuring an interconnected brain or node structure, deep purple to pink gradient, transparent background"
+    aspect_ratio: "1:1"
+
+notes:
+  - Using Zustand for global state to seamlessly allow AI chat to update UI filters
+  - Implementing Web Speech API for voice search and voice chat features
+  - Using native HTML range inputs and select elements styled heavily with Tailwind for maximum reliability
