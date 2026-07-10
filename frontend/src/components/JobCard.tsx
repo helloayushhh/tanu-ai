@@ -23,7 +23,7 @@ export function JobCard({ job, isBestMatch }: JobCardProps) {
 
   return (
     <>
-      <div className="bg-slate-900 p-6 rounded-xl border border-white/10">
+      <div className="bg-[#2f3032] p-6 rounded-3xl border border-yellow-400/10" backdrop-blur-xl shadow-xl>
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <h2 className="text-xl text-white font-bold">{job.title}</h2>
