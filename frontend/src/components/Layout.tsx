@@ -30,7 +30,7 @@ export function Layout({ children }: LayoutProps) {
       {/* ✅ GLOBAL BACKGROUND */}
       <div className="fixed inset-0 z-0">
         <img
-          src="/images/front.jpeg"
+          src="/images/front.png"
           alt="bg"
           className="w-full h-full object-cover"
         />

@@ -34,7 +34,7 @@ export function Login() {
       {/* ✅ Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src={`${import.meta.env.BASE_URL}images/my.jpeg`}
+          src={`${import.meta.env.BASE_URL}images/login-bg.png`}
           alt="Login background"
           className="w-full h-full object-cover opacity-90"
         />
@@ -52,15 +52,15 @@ export function Login() {
           className="w-full max-w-md"
         >
           {/* ✅ Reduced black overlay */}
-          <div className="p-8 md:p-10 rounded-3xl bg-black/10 backdrop-blur-md border border-white/10">
+          <div className="p-8 md:p-10 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
             
             {/* Logo */}
-            <div className="flex flex-col items-center mb-10">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center mb-12">
+              <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 via-red-500 to-gray-700 rounded-2xl flex items-center justify-center mb-6">
                 <img 
-                  src={`${import.meta.env.BASE_URL}images/logo-icon.png`}
+                  src={`${import.meta.env.BASE_URL}images/logo.png`}
                   alt="logo"
-                  className="w-10 h-10"
+                  className="w-12 h-12"
                 />
               </div>
 
@@ -68,7 +68,7 @@ export function Login() {
                 Welcome to Tanu
               </h1>
               <p className="text-white/70 text-center">
-                Welcome back! Tanu is ready to help you land your next opportunity.
+                Your AI career companion for every step of your job search.
               </p>
             </div>
 

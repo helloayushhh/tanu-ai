@@ -10,7 +10,7 @@ images:
   - path: "artifacts/job-tracker/public/images/auth-bg.png"
     description: "Abstract dark futuristic background with deep indigo and magenta glowing gradients, geometric mesh patterns, professional and slick"
     aspect_ratio: "16:9"
-  - path: "artifacts/job-tracker/public/images/logo-icon.png"
+  - path: "artifacts/job-tracker/public/images/favicon.png"
     description: "Minimalist glowing geometric logo mark featuring an interconnected brain or node structure, deep purple to pink gradient, transparent background"
     aspect_ratio: "1:1"
 
