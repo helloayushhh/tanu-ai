@@ -81,7 +81,7 @@ export const useChatStore = create<ChatState>((set) => ({
     {
       id: 'welcome',
       role: 'ai',
-      content: "Hi! I'm your Smart AI Assistant. You can ask me to find jobs, update your search filters, or help you navigate the app.",
+      content: "Hi! I'm Tanu, Smart AI Assistant. You can ask me to find jobs, update your search filters, or help you navigate the app.",
       timestamp: new Date()
     }
   ],

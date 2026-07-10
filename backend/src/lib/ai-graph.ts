@@ -397,7 +397,7 @@ async function helpNode(state: AiGraphState): Promise<Partial<AiGraphState>> {
   return {
     action: "help",
     reply:
-      "How to use Smart AI:\n- Upload resume on `Resume` page (PDF/TXT).\n- Ask jobs like `React remote jobs` using text or mic.\n- Open `Applications` to track your job statuses.",
+      "How to use Tanu:\n- Upload resume on `Resume` page (PDF/TXT).\n- Ask jobs like `React remote jobs` using text or mic.\n- Open `Applications` to track your job statuses.",
     jobRecommendations: [],
   };
 }

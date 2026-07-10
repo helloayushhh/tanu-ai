@@ -1,4 +1,4 @@
-Smart AI Job Tracker
+Tanu
 
 A modern, intelligent job application tracking system built with React, TypeScript, and Fastify. Features AI-powered job recommendations, comprehensive application tracking, and a clean UI design.
 
@@ -22,7 +22,7 @@ Node.js 18+
 Installation
 Clone the repository
 git clone <repository-url>
-cd smart-match
+cd tanu-ai
 Install dependencies
 npm install
 
@@ -47,7 +47,7 @@ Frontend runs on:
 http://localhost:5173
 Open in browser
 http://localhost:5173
-smart-match/
+tanu-ai/
 ├── backend/src/
 │   ├── src/
 │   │   ├── lib/

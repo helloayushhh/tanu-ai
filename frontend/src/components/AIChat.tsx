@@ -122,7 +122,7 @@ export function AIChat() {
                   <BrainCircuit className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-sm text-white">Smart AI</h3>
+                  <h3 className="font-display font-bold text-sm text-white">Tanu</h3>
                   <p className="text-xs text-emerald-400 flex items-center">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
                     Online

@@ -41,7 +41,7 @@ export function Layout({ children }: LayoutProps) {
       <aside className="w-64 fixed inset-y-0 left-0 z-40 border-r border-white/5 bg-card/50 backdrop-blur-xl hidden md:flex flex-col">
         <div className="h-16 flex items-center px-6 border-b border-white/5">
           <BrainCircuit className="w-6 h-6 text-primary mr-2" />
-          <span className="font-display font-bold text-xl text-white">Smart AI</span>
+          <span className="font-display font-bold text-xl text-white">Tanu</span>
         </div>
 
         <nav className="flex-1 py-6 px-4 space-y-2">
