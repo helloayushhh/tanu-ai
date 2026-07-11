@@ -148,20 +148,37 @@ export function AddApplicationModal({ isOpen, onClose }: AddApplicationModalProp
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,.06)" }}>
+            <div
+              className="flex items-center justify-between px-6 py-4"
+              style={{
+                borderBottom: "1px solid rgba(255,255,255,.08)",
+              }}
+       >
               <div className="flex items-center gap-3">
                 <div
-                  className="flex items-center justify-center w-9 h-9 rounded-lg"
-                  style={{ background: "linear-gradient(135deg, #F2C744 0%, #E4572E 100%)" }}
-                >
-                  <Briefcase className="w-4.5 h-4.5 text-black/80" />
+                  className="flex items-center justify-center w-10 h-10 rounded-xl"
+                  style={{
+                    background: "linear-gradient(135deg, #FBBF24 0%, #F97316 55%, #EF4444 100%)",
+                    boxShadow: "0 8px 20px rgba(251,191,36,.25)"
+                  }}
+               >
+                  <Briefcase className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-lg font-semibold text-white">Add New Application</h2>
+
+                <div>
+                  <h2 className="text-xl font-bold text-white">
+                    Add New Application
+                  </h2>
+                  <p className="text-sm text-gray-400">
+                    Organize your next opportunity
+                  </p>
+                </div>
               </div>
+
               <button
                 onClick={onClose}
-                className="text-white/50 hover:text-white transition-colors duration-150"
-              >
+                className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#2D333B] text-gray-400 hover:text-yellow-400 hover:bg-[#3A414A] transition-all duration-200"
+             >
                 <X className="w-5 h-5" />
               </button>
             </div>

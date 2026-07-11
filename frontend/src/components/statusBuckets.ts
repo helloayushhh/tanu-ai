@@ -89,3 +89,14 @@ export function tagColor(tag?: string): { bg: string; text: string } {
   if (t === "linkedin") return { bg: "rgba(167,139,250,.2)", text: "#C4B5FD" };
   return { bg: "rgba(255,255,255,.08)", text: "rgba(255,255,255,.7)" };
 }
+
+// When you hit "+" on a Status column, this is the raw status the new
+// application gets saved with. "never_applied" has no entry — you can't
+// directly create a "never applied" application, those come from saved jobs.
+export const BUCKET_DEFAULT_STATUS: Partial<Record<StatusBucket, string>> = {
+  pending: "pending",
+  applied: "applied",
+  ongoing: "interview_scheduled",
+  offered: "offer_received",
+  rejected: "rejected"
+};

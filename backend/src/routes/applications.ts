@@ -11,7 +11,7 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     };
   });
 
-  // ✅ CREATE APPLICATION (THIS WAS MISSING)
+  // ✅ CREATE APPLICATION
   app.post("/api/applications", async (req, reply) => {
     const body = req.body as any;
 
@@ -26,20 +26,20 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
       jobLink: body.jobLink || "",
       location: body.location || "",
       salary: body.salary || "",
-      priority: body.priority || "medium",
+      priority: body.priority || "",
       deadline: body.deadline || "",
       followUp: body.followUp || "",
       source: body.source || "",
       contactPerson: body.contactPerson || "",
       contactEmail: body.contactEmail || "",
       timeline: [
-      {
-        status: body.status || "applied",
-        date: new Date().toISOString(),
-        note: "Application submitted"
-      },
-    ],
- };
+        {
+          status: body.status || "applied",
+          date: new Date().toISOString(),
+          note: "Application submitted"
+        },
+      ],
+    };
 
     applications.unshift(newApp);
 
@@ -64,7 +64,7 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
       jobLink: body.jobLink || "",
       location: body.location || "",
       salary: body.salary || "",
-      priority: body.priority || "medium",
+      priority: body.priority || "",
       deadline: body.deadline || "",
       followUp: body.followUp || "",
       source: body.source || "",
@@ -87,7 +87,7 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     };
   });
 
-  // ✅ UPDATE APPLICATION STATUS
+  // ✅ UPDATE APPLICATION STATUS (dedicated route — used by the status dropdown on cards)
   app.patch("/api/applications/:id/status", async (req, reply) => {
     const { id } = req.params as { id: string };
     const { status, note } = req.body as { status: string; note?: string };
@@ -110,7 +110,7 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     return reply.send({ success: true, application: current });
   });
 
-  // ✅ UPDATE APPLICATION (for notes and other fields)
+  // ✅ UPDATE APPLICATION (general edit — used by the card detail modal)
   app.patch("/api/applications/:id", async (req, reply) => {
     const { id } = req.params as { id: string };
     const body = req.body as any;
@@ -121,7 +121,7 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     }
 
     const current = applications[idx];
-    
+
     // Update allowed fields
     if (body.notes !== undefined) current.notes = body.notes;
     if (body.jobLink !== undefined) current.jobLink = body.jobLink;
@@ -135,7 +135,19 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     if (body.source !== undefined) current.source = body.source;
     if (body.contactPerson !== undefined) current.contactPerson = body.contactPerson;
     if (body.contactEmail !== undefined) current.contactEmail = body.contactEmail;
-    
+
+    // Status is special: it needs a timeline entry too, same as the dedicated route,
+    // so cards actually move columns and the history stays accurate.
+    if (body.status !== undefined && body.status !== current.status) {
+      current.status = body.status;
+      current.timeline = Array.isArray(current.timeline) ? current.timeline : [];
+      current.timeline.unshift({
+        status: body.status,
+        date: new Date().toISOString(),
+        note: `Status changed to ${body.status}`
+      });
+    }
+
     applications[idx] = current;
     return reply.send({ success: true, application: current });
   });

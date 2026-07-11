@@ -2,9 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Layout } from "../components/Layout";
 import { DidYouApplyModal } from "../components/DidYouApplyModal";
 import { AddApplicationModal } from "../components/AddApplicationModal";
+import { ApplicationDetailModal, FullApplication } from "../components/ApplicationDetailModal";
+import { QuickAddColumnForm } from "../components/QuickAddColumnForm";
 import {
   useGetApplications,
   useUpdateApplicationStatus,
+  useUpdateApplication,
+  useApplyJob,
 } from "../hooks/use-api";
 import { Badge, Button, Skeleton } from "../components/ui";
 import {
@@ -19,17 +23,26 @@ import {
   Circle,
   List as ListIcon,
 } from "lucide-react";
-import { STATUS_BUCKETS, bucketForStatus, StatusBucket } from "../components/statusBuckets";
+import {
+  STATUS_BUCKETS,
+  bucketForStatus,
+  BUCKET_DEFAULT_STATUS,
+  StatusBucket,
+} from "../components/statusBuckets";
 
 type Tab = "status" | "pending" | "all";
 
 export function Applications() {
   const { data: response, isLoading: isAppsLoading } = useGetApplications();
   const updateStatusMutation = useUpdateApplicationStatus();
+  const updateApplicationMutation = useUpdateApplication();
+  const applyMutation = useApplyJob();
 
   const applications = response?.applications || [];
   const [showAddModal, setShowAddModal] = useState(false);
   const [tab, setTab] = useState<Tab>("status");
+  const [selectedApp, setSelectedApp] = useState<FullApplication | null>(null);
+  const [openQuickAdd, setOpenQuickAdd] = useState<StatusBucket | null>(null);
 
   // Calculate statistics (unchanged)
   const stats = useMemo(() => {
@@ -78,11 +91,45 @@ export function Applications() {
     return groups;
   }, [applications]);
 
-  // Which list to show for the Pending / All Applications tabs
   const visibleApplications = useMemo(() => {
     if (tab === "pending") return grouped.pending;
     return applications; // "all"
   }, [tab, grouped, applications]);
+
+  // ---- Save edits from the detail modal ----
+  const handleSaveDetail = (id: string, fields: Partial<FullApplication>) => {
+    updateApplicationMutation.mutate(
+      { id, ...fields },
+      {
+        onError: () => {
+          alert("Couldn't save changes — check your connection and try again.");
+        },
+      }
+    );
+  };
+
+  // ---- Quick-add from a Status column's + button ----
+  const handleQuickAdd = (
+    bucket: StatusBucket,
+    fields: { title: string; company: string; deadline: string; source: string }
+  ) => {
+    const status = BUCKET_DEFAULT_STATUS[bucket] || "applied";
+    applyMutation.mutate(
+      {
+        jobId: Date.now().toString(),
+        title: fields.title,
+        company: fields.company || "Unknown",
+        status,
+        deadline: fields.deadline,
+        source: fields.source,
+      } as any,
+      {
+        onSuccess: () => {
+          setOpenQuickAdd(null);
+        },
+      }
+    );
+  };
 
   // Pending application popup (unchanged)
   const pendingKey = "smart-ai:pendingApplication";
@@ -123,9 +170,13 @@ export function Applications() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---- Reusable detailed card (same design you already had) ----
+  // ---- Reusable detailed card (clickable → opens detail modal) ----
   const renderApplicationCard = (app: any) => (
-    <div key={app.id} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+    <div
+      key={app.id}
+      onClick={() => setSelectedApp(app)}
+      className="bg-white/5 border border-white/10 rounded-2xl p-6 cursor-pointer hover:bg-white/[0.07] transition-colors duration-150"
+    >
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
@@ -135,6 +186,7 @@ export function Applications() {
                 href={app.jobLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="text-blue-400 hover:text-blue-300 transition-colors"
               >
                 <Calendar className="w-4 h-4" />
@@ -144,7 +196,7 @@ export function Applications() {
           <div className="text-white/60 text-sm mb-3">{app.company}</div>
 
           {/* Status Dropdown */}
-          <div className="mb-3">
+          <div className="mb-3" onClick={(e) => e.stopPropagation()}>
             <label className="text-white/60 text-xs block mb-1">Status:</label>
             <select
               value={app.status}
@@ -205,14 +257,15 @@ export function Applications() {
     </div>
   );
 
-  // ---- Compact card used only inside the Status kanban columns ----
+  // ---- Compact card used inside Status kanban columns (also clickable) ----
   const renderCompactCard = (app: any) => {
     const bucket = bucketForStatus(app.status);
     const { cardBg, cardBorder } = STATUS_BUCKETS[bucket];
     return (
       <div
         key={app.id}
-        className="rounded-xl p-3.5 mb-2.5"
+        onClick={() => setSelectedApp(app)}
+        className="rounded-xl p-3.5 mb-2.5 cursor-pointer hover:brightness-110 transition-[filter] duration-150"
         style={{ background: cardBg, border: `1px solid ${cardBorder}` }}
       >
         <div className="text-white font-semibold text-[15px] leading-snug mb-1">{app.title}</div>
@@ -317,7 +370,7 @@ export function Applications() {
             </div>
           </div>
 
-          {/* NEW: Tabs — Status / Pending / All Applications */}
+          {/* Tabs — Status / Pending / All Applications */}
           <div className="flex items-center gap-1">
             <button
               onClick={() => setTab("status")}
@@ -361,7 +414,7 @@ export function Applications() {
               <Skeleton key={i} className="h-40 w-full rounded-2xl bg-white/10" />
             ))}
           </div>
-        ) : applications.length === 0 ? (
+        ) : applications.length === 0 && tab !== "status" ? (
           <div className="text-center py-24 bg-white/10 backdrop-blur-md rounded-3xl">
             <h3 className="text-xl">No applications yet</h3>
             <p className="text-white/60 mt-2 text-sm">
@@ -369,18 +422,35 @@ export function Applications() {
             </p>
           </div>
         ) : tab === "status" ? (
-          // ---- Status board: 6 columns ----
+          // ---- Status board: 6 columns, each with a + quick-add button ----
           <div className="flex gap-4 overflow-x-auto pb-2">
             {(Object.keys(STATUS_BUCKETS) as StatusBucket[]).map((key) => {
               const config = STATUS_BUCKETS[key];
               const items = grouped[key];
+              const canAdd = key !== "never_applied";
               return (
                 <div key={key} className="flex-shrink-0 w-72">
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <span className="w-2 h-2 rounded-full" style={{ background: config.dot }} />
                     <span className="text-sm font-semibold text-white">{config.label}</span>
                     <span className="text-xs text-white/40">{items.length}</span>
+                    {canAdd && (
+                      <button
+                        onClick={() => setOpenQuickAdd(openQuickAdd === key ? null : key)}
+                        className="ml-auto w-5 h-5 flex items-center justify-center rounded text-white/40 hover:text-white hover:bg-white/10 transition-colors duration-150"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
+
+                  {openQuickAdd === key && (
+                    <QuickAddColumnForm
+                      onAdd={(fields) => handleQuickAdd(key, fields)}
+                      onClose={() => setOpenQuickAdd(null)}
+                    />
+                  )}
+
                   <div className="max-h-[65vh] overflow-y-auto pr-1">
                     {items.length === 0 ? (
                       <div
@@ -398,14 +468,12 @@ export function Applications() {
             })}
           </div>
         ) : visibleApplications.length === 0 ? (
-          // ---- Empty state for Pending / All when filtered list is empty ----
           <div className="text-center py-24 bg-white/10 backdrop-blur-md rounded-3xl">
             <h3 className="text-xl">
               {tab === "pending" ? "No pending applications" : "No applications yet"}
             </h3>
           </div>
         ) : (
-          // ---- Pending / All Applications: your original detailed cards ----
           <div className="space-y-4">{visibleApplications.map((app: any) => renderApplicationCard(app))}</div>
         )}
       </div>
@@ -424,6 +492,12 @@ export function Applications() {
       />
 
       <AddApplicationModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+
+      <ApplicationDetailModal
+        application={selectedApp}
+        onClose={() => setSelectedApp(null)}
+        onSave={handleSaveDetail}
+      />
     </Layout>
   );
 }
