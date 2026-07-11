@@ -28,6 +28,16 @@ export interface Application {
   job: Job;
   status: "applied" | "interview" | "offer" | "rejected";
   appliedAt: string;
+  notes?: string;
+  jobLink?: string;
+  location?: string;
+  salary?: string;
+  priority?: "high" | "medium" | "low";
+  deadline?: string;
+  followUp?: string;
+  source?: string;
+  contactPerson?: string;
+  contactEmail?: string;
   timeline: {
     status: string;
     date: string;

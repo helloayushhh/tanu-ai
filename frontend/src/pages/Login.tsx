@@ -107,7 +107,7 @@ export function Login() {
               <div className="pt-4">
                 <Button 
                   type="submit"
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                  className="w-full bg-[#3F4752] hover:bg-[#4B5563] text-white border border-white/10 shadow-lg transition-all duration-300"
                   disabled={loginMutation.isPending}
                 >
                   {loginMutation.isPending ? "Tanu is getting things ready..." : (

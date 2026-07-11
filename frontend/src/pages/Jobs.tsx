@@ -116,7 +116,7 @@ export function Jobs() {
           showFilters ? "block" : "hidden",
           "lg:block"
         )}>
-          <div className="bg-card/50 backdrop-blur-md rounded-2xl border p-5 sticky top-24">
+          <div className="bg-card/50 backdrop-blur-md rounded-2xl border p-4 sticky top-6 h-[calc(100vh-110px)] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-display font-bold text-lg flex items-center">
                 <SlidersHorizontal className="w-5 h-5 mr-2 text-primary" /> Filters
@@ -257,7 +257,7 @@ export function Jobs() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Date Posted</label>
                 <select
-                  className="w-full h-10 bg-black/40 border border-white/10 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+                  className="w-full h-10 bg-[#1B1F24] text-white border border-yellow-400/20 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   value={filters.datePosted}
                   onChange={(e) => setFilter("datePosted", e.target.value)}
                 >
@@ -272,7 +272,7 @@ export function Jobs() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Work Mode</label>
                 <select 
-                  className="w-full h-10 bg-black/40 border border-white/10 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+                  className="w-full h-10 bg-[#1B1F24] text-white border border-yellow-400/20 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
                   value={filters.workMode}
                   onChange={(e) => setFilter('workMode', e.target.value)}
                 >
@@ -287,7 +287,7 @@ export function Jobs() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Job Type</label>
                 <select 
-                  className="w-full h-10 bg-black/40 border border-white/10 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+                  className="w-full h-10 bg-[#1B1F24] text-white border border-yellow-400/20 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
                   value={filters.jobType}
                   onChange={(e) => setFilter('jobType', e.target.value)}
                 >

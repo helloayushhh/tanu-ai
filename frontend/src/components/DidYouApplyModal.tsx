@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, X } from "lucide-react";
 import { useState } from "react";
 import { useApplyJob } from "../hooks/use-api";
-
+ 
 interface DidYouApplyModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,14 +10,14 @@ interface DidYouApplyModalProps {
   company: string;
   jobId?: string;
 }
-
+ 
 export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: DidYouApplyModalProps) {
   const [selectedOption, setSelectedOption] = useState<"yes" | "earlier" | null>(null);
   const applyMutation = useApplyJob();
-
+ 
   const handleYesApplied = () => {
     setSelectedOption("yes");
-    
+ 
     // Save application to backend API
     applyMutation.mutate({
       jobId: jobId || Date.now().toString(),
@@ -33,10 +33,10 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
       }
     });
   };
-
+ 
   const handleAppliedEarlier = () => {
     setSelectedOption("earlier");
-    
+ 
     // Save application with earlier status to backend API
     applyMutation.mutate({
       jobId: jobId || Date.now().toString(),
@@ -52,9 +52,9 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
       }
     });
   };
-
+ 
   if (!isOpen) return null;
-
+ 
   return (
     <AnimatePresence>
       <motion.div
@@ -63,37 +63,37 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-50 flex items-center justify-center"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0.95) 100%)",
+          background: "radial-gradient(circle at center, rgba(251,191,36,.08) 0%, rgba(239,68,68,.08) 45%, rgba(0,0,0,.94) 100%)",
           backdropFilter: "blur(12px)"
         }}
         onClick={onClose}
       >
         {/* Floating gradient blobs */}
         <div className="absolute inset-0 overflow-hidden">
-          <div 
+          <div
             className="absolute w-96 h-96 rounded-full opacity-20"
             style={{
-              background: "radial-gradient(circle, #4F46E5 0%, transparent 70%)",
+              background: "radial-gradient(circle,#FBBF24 0%,transparent 70%)",
               top: "10%",
               left: "10%",
               filter: "blur(60px)",
               animation: "float 6s ease-in-out infinite"
             }}
           />
-          <div 
+          <div
             className="absolute w-80 h-80 rounded-full opacity-20"
             style={{
-              background: "radial-gradient(circle, #9333EA 0%, transparent 70%)",
+              background: "radial-gradient(circle,#F97316 0%,transparent 70%)",
               bottom: "20%",
               right: "15%",
               filter: "blur(50px)",
               animation: "float 8s ease-in-out infinite reverse"
             }}
           />
-          <div 
+          <div
             className="absolute w-64 h-64 rounded-full opacity-15"
             style={{
-              background: "radial-gradient(circle, #EC4899 0%, transparent 70%)",
+              background: "radial-gradient(circle,#EF4444 0%,transparent 70%)",
               top: "50%",
               right: "30%",
               filter: "blur(40px)",
@@ -101,7 +101,7 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
             }}
           />
         </div>
-
+ 
         <motion.div
           initial={{ scale: 0.8, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -111,24 +111,24 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
           onClick={(e) => e.stopPropagation()}
         >
           {/* Glassmorphism card */}
-          <div 
+          <div
             className="relative rounded-[24px] p-8"
             style={{
               background: "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255, 255, 255, 0.18)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              boxShadow: "0 25px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
             }}
           >
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors duration-200"
+              className="absolute top-6 right-6 text-yellow-400 hover:text-red-400 transition-colors duration-200"
             >
               <X className="w-5 h-5" />
             </button>
-
+ 
             {/* Icon and title */}
             <motion.div
               initial={{ scale: 0 }}
@@ -136,26 +136,30 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
               transition={{ delay: 0.2, type: "spring", damping: 20, stiffness: 300 }}
               className="flex justify-center mb-6"
             >
-              <div 
+              <div
                 className="relative flex items-center justify-center w-16 h-16 rounded-[20px]"
                 style={{
-                  background: "linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #EC4899 100%)",
+                  background: "linear-gradient(135deg,#FBBF24 0%,#F97316 55%,#EF4444 100%)",
                   boxShadow: "0 4px 20px rgba(79, 70, 229, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)"
                 }}
               >
-                <Briefcase className="w-8 h-8 text-white" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/logo-icon.png`}
+                  alt="Tanu"
+                  className="w-8 h-8"
+                />
                 {/* Glow effect */}
-                <div 
+                <div
                   className="absolute inset-0 rounded-[20px] opacity-50"
                   style={{
-                    background: "linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #EC4899 100%)",
+                    background: "linear-gradient(135deg,#FBBF24 0%,#F97316 55%,#EF4444 100%)",
                     filter: "blur(20px)",
                     transform: "scale(1.2)"
                   }}
                 />
               </div>
             </motion.div>
-
+ 
             {/* Content */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -163,7 +167,7 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
               transition={{ delay: 0.3 }}
               className="text-center"
             >
-              <h2 
+              <h2
                 className="text-3xl font-bold mb-3"
                 style={{
                   background: "linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%)",
@@ -173,10 +177,10 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
                   fontFamily: "'Inter', system-ui, sans-serif"
                 }}
               >
-                Did you apply?
+                Track this application?
               </h2>
-              
-              <p 
+ 
+              <p
                 className="text-lg mb-8"
                 style={{
                   color: "rgba(255, 255, 255, 0.8)",
@@ -185,7 +189,7 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
               >
                 Did you apply to <span className="font-semibold text-white">{jobTitle}</span> at <span className="font-semibold text-white">{company}</span>?
               </p>
-
+ 
               {/* Buttons */}
               <div className="space-y-3">
                 <motion.button
@@ -193,14 +197,14 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
                   whileTap={{ scale: 0.98 }}
                   onClick={handleYesApplied}
                   disabled={selectedOption !== null}
-                  className="w-full py-4 px-6 rounded-[16px] font-semibold text-white relative overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-4 px-6 rounded-xl font-semibold text-white relative overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: selectedOption === "yes" 
+                    background: selectedOption === "yes"
                       ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
-                      : "linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #EC4899 100%)",
+                      : "linear-gradient(135deg,#FBBF24 0%,#F97316 50%,#EF4444 100%)",
                     boxShadow: selectedOption === "yes"
                       ? "0 4px 20px rgba(16, 185, 129, 0.4)"
-                      : "0 4px 20px rgba(79, 70, 229, 0.4)",
+                      : "0 4px 20px rgba(251,191,36,.35)",
                     fontFamily: "'Inter', system-ui, sans-serif"
                   }}
                 >
@@ -218,23 +222,23 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
                   ) : (
                     "Yes, Applied"
                   )}
-                  
+ 
                   {/* Hover glow effect */}
-                  <div 
-                    className="absolute inset-0 rounded-[16px] opacity-0 hover:opacity-100 transition-opacity duration-300"
+                  <div
+                    className="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"
                     style={{
                       background: "linear-gradient(135deg, rgba(79, 70, 229, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%)",
                       filter: "blur(10px)"
                     }}
                   />
                 </motion.button>
-
+ 
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleAppliedEarlier}
                   disabled={selectedOption !== null}
-                  className="w-full py-4 px-6 rounded-[16px] font-semibold relative overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-4 px-6 rounded-xl font-semibold relative overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     background: selectedOption === "earlier"
                       ? "linear-gradient(135deg, #6b7280 0%, #4b5563 100%)"
@@ -264,7 +268,7 @@ export function DidYouApplyModal({ isOpen, onClose, jobTitle, company, jobId }: 
           </div>
         </motion.div>
       </motion.div>
-
+ 
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }

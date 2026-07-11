@@ -24,14 +24,22 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
       appliedAt: new Date().toISOString(),
       notes: body.notes || "",
       jobLink: body.jobLink || "",
+      location: body.location || "",
+      salary: body.salary || "",
+      priority: body.priority || "medium",
+      deadline: body.deadline || "",
+      followUp: body.followUp || "",
+      source: body.source || "",
+      contactPerson: body.contactPerson || "",
+      contactEmail: body.contactEmail || "",
       timeline: [
-        {
-          status: body.status || "applied",
-          date: new Date().toISOString(),
-          note: "Application submitted"
-        },
-      ],
-    };
+      {
+        status: body.status || "applied",
+        date: new Date().toISOString(),
+        note: "Application submitted"
+      },
+    ],
+ };
 
     applications.unshift(newApp);
 
@@ -54,6 +62,14 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
       appliedAt: new Date().toISOString(),
       notes: body.notes || "",
       jobLink: body.jobLink || "",
+      location: body.location || "",
+      salary: body.salary || "",
+      priority: body.priority || "medium",
+      deadline: body.deadline || "",
+      followUp: body.followUp || "",
+      source: body.source || "",
+      contactPerson: body.contactPerson || "",
+      contactEmail: body.contactEmail || "",
       timeline: [
         {
           status: body.status || "applied",
@@ -111,7 +127,15 @@ export async function registerApplicationRoutes(app: FastifyInstance) {
     if (body.jobLink !== undefined) current.jobLink = body.jobLink;
     if (body.title !== undefined) current.title = body.title;
     if (body.company !== undefined) current.company = body.company;
-
+    if (body.location !== undefined) current.location = body.location;
+    if (body.salary !== undefined) current.salary = body.salary;
+    if (body.priority !== undefined) current.priority = body.priority;
+    if (body.deadline !== undefined) current.deadline = body.deadline;
+    if (body.followUp !== undefined) current.followUp = body.followUp;
+    if (body.source !== undefined) current.source = body.source;
+    if (body.contactPerson !== undefined) current.contactPerson = body.contactPerson;
+    if (body.contactEmail !== undefined) current.contactEmail = body.contactEmail;
+    
     applications[idx] = current;
     return reply.send({ success: true, application: current });
   });

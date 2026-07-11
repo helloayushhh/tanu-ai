@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Briefcase, Link, Calendar, FileText } from "lucide-react";
+import { X, Briefcase, Link, FileText, MapPin, DollarSign, Star, Calendar, Bell, User, Mail, Globe } from "lucide-react";
 import { useState } from "react";
 import { useApplyJob } from "../hooks/use-api";
 import { Button } from "./ui";
@@ -10,54 +10,114 @@ interface AddApplicationModalProps {
 }
 
 const statusOptions = [
-  { value: "applied", label: "Applied", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
-  { value: "interview_scheduled", label: "Interview Scheduled", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-  { value: "interview_completed", label: "Interview Completed", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
-  { value: "offer_received", label: "Offer Received", color: "bg-green-500/20 text-green-300 border-green-500/30" },
-  { value: "rejected", label: "Rejected", color: "bg-red-500/20 text-red-300 border-red-500/30" }
+  { value: "applied", label: "Applied" },
+  { value: "pending", label: "Pending" },
+  { value: "interview_scheduled", label: "Interview Scheduled" },
+  { value: "interview_completed", label: "Interview Completed" },
+  { value: "offer_received", label: "Offer Received" },
+  { value: "rejected", label: "Rejected" }
 ];
 
+const priorityOptions = [
+  { value: "high", label: "High" },
+  { value: "medium", label: "Medium" },
+  { value: "low", label: "Low" }
+];
+
+const sourceOptions = [
+  { value: "linkedin", label: "LinkedIn" },
+  { value: "company", label: "Company Site" },
+  { value: "referral", label: "Referral" },
+  { value: "indeed", label: "Indeed" },
+  { value: "other", label: "Other" }
+];
+
+const initialFormData = {
+  title: "",
+  company: "",
+  jobLink: "",
+  location: "",
+  status: "applied",
+  priority: "medium",
+  deadline: "",
+  followUp: "",
+  salary: "",
+  source: "linkedin",
+  contactPerson: "",
+  contactEmail: "",
+  notes: ""
+};
+
+// Shared classes so every input/select/textarea stays visually identical and compact
+const fieldClass =
+  "w-full h-12 px-3.5 rounded-lg text-white placeholder-white/40 text-sm focus:outline-none transition-colors duration-150";
+const fieldStyle = {
+  background: "#23272F",
+  border: "1px solid #3B414B"
+};
+const fieldFocusStyle = {
+  borderColor: "#F2C744",
+  boxShadow: "0 0 0 1px #F2C744"
+};
+
+function FieldLabel({ icon: Icon, children, required }: { icon?: any; children: React.ReactNode; required?: boolean }) {
+  return (
+    <label className="flex items-center gap-1.5 text-white/70 text-xs font-medium mb-1.5">
+      {Icon && <Icon className="w-3.5 h-3.5" />}
+      {children}
+      {required && <span className="text-[#F2C744]">*</span>}
+    </label>
+  );
+}
+
 export function AddApplicationModal({ isOpen, onClose }: AddApplicationModalProps) {
-  const [formData, setFormData] = useState({
-    title: "",
-    company: "",
-    jobLink: "",
-    notes: "",
-    status: "applied"
-  });
-  
+  const [formData, setFormData] = useState(initialFormData);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
   const applyMutation = useApplyJob();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.company) {
       alert("Please fill in at least job title and company name");
       return;
     }
 
-    applyMutation.mutate({
-      jobId: Date.now().toString(),
-      title: formData.title,
-      company: formData.company,
-      status: formData.status
-    } as any, {
-      onSuccess: () => {
-        setFormData({
-          title: "",
-          company: "",
-          jobLink: "",
-          notes: "",
-          status: "applied"
-        });
-        onClose();
+    applyMutation.mutate(
+      {
+        jobId: Date.now().toString(),
+        title: formData.title,
+        company: formData.company,
+        jobLink: formData.jobLink,
+        location: formData.location,
+        status: formData.status,
+        priority: formData.priority,
+        deadline: formData.deadline,
+        followUp: formData.followUp,
+        salary: formData.salary,
+        source: formData.source,
+        contactPerson: formData.contactPerson,
+        contactEmail: formData.contactEmail,
+        notes: formData.notes
+      } as any,
+      {
+        onSuccess: () => {
+          setFormData(initialFormData);
+          onClose();
+        }
       }
-    });
+    );
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  const getFieldStyle = (fieldName: string) => ({
+    ...fieldStyle,
+    ...(focusedField === fieldName ? fieldFocusStyle : {})
+  });
 
   if (!isOpen) return null;
 
@@ -67,220 +127,284 @@ export function AddApplicationModal({ isOpen, onClose }: AddApplicationModalProp
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0.95) 100%)",
-          backdropFilter: "blur(12px)"
-        }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ background: "rgba(0, 0, 0, 0.6)", backdropFilter: "blur(6px)" }}
         onClick={onClose}
       >
-        {/* Floating gradient blobs */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div 
-            className="absolute w-96 h-96 rounded-full opacity-20"
-            style={{
-              background: "radial-gradient(circle, #4F46E5 0%, transparent 70%)",
-              top: "10%",
-              left: "10%",
-              filter: "blur(60px)",
-              animation: "float 6s ease-in-out infinite"
-            }}
-          />
-          <div 
-            className="absolute w-80 h-80 rounded-full opacity-20"
-            style={{
-              background: "radial-gradient(circle, #9333EA 0%, transparent 70%)",
-              bottom: "20%",
-              right: "15%",
-              filter: "blur(50px)",
-              animation: "float 8s ease-in-out infinite reverse"
-            }}
-          />
-        </div>
-
         <motion.div
-          initial={{ scale: 0.8, opacity: 0, y: 20 }}
+          initial={{ scale: 0.96, opacity: 0, y: 12 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.8, opacity: 0, y: 20 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="relative mx-4 max-w-md w-full"
+          exit={{ scale: 0.96, opacity: 0, y: 12 }}
+          transition={{ type: "spring", damping: 28, stiffness: 320 }}
+          className="relative w-full max-w-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Glassmorphism card */}
-          <div 
-            className="relative rounded-[24px] p-8"
+          <div
+            className="relative rounded-2xl overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255, 255, 255, 0.18)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+              background: "#1B1F24",
+              border: "1px solid rgba(255,255,255,.06)",
+              boxShadow: "0 25px 60px rgba(0,0,0,.45)"
             }}
           >
-            {/* Close button */}
-            <button
-              onClick={onClose}
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors duration-200"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Icon and title */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", damping: 20, stiffness: 300 }}
-              className="flex justify-center mb-6"
-            >
-              <div 
-                className="relative flex items-center justify-center w-16 h-16 rounded-[20px]"
-                style={{
-                  background: "linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #EC4899 100%)",
-                  boxShadow: "0 4px 20px rgba(79, 70, 229, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)"
-                }}
-              >
-                <Briefcase className="w-8 h-8 text-white" />
-                {/* Glow effect */}
-                <div 
-                  className="absolute inset-0 rounded-[20px] opacity-50"
-                  style={{
-                    background: "linear-gradient(135deg, #4F46E5 0%, #9333EA 50%, #EC4899 100%)",
-                    filter: "blur(20px)",
-                    transform: "scale(1.2)"
-                  }}
-                />
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,.06)" }}>
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex items-center justify-center w-9 h-9 rounded-lg"
+                  style={{ background: "linear-gradient(135deg, #F2C744 0%, #E4572E 100%)" }}
+                >
+                  <Briefcase className="w-4.5 h-4.5 text-black/80" />
+                </div>
+                <h2 className="text-lg font-semibold text-white">Add New Application</h2>
               </div>
-            </motion.div>
-
-            {/* Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <h2 
-                className="text-3xl font-bold mb-6 text-center"
-                style={{
-                  background: "linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  fontFamily: "'Inter', system-ui, sans-serif"
-                }}
+              <button
+                onClick={onClose}
+                className="text-white/50 hover:text-white transition-colors duration-150"
               >
-                Add Application
-              </h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Job Title */}
-                <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2">
-                    Job Title *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => handleInputChange('title', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all"
-                    placeholder="e.g. Senior React Developer"
-                    required
-                  />
-                </div>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-                {/* Company Name */}
-                <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2">
-                    Company Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => handleInputChange('company', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all"
-                    placeholder="e.g. Google, Microsoft"
-                    required
-                  />
-                </div>
+            {/* Body */}
+            <form onSubmit={handleSubmit}>
+              <div className="px-6 py-5 max-h-[70vh] overflow-y-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3.5">
+                  {/* Job Title */}
+                  <div>
+                    <FieldLabel required>Job Title</FieldLabel>
+                    <input
+                      type="text"
+                      value={formData.title}
+                      onChange={(e) => handleInputChange("title", e.target.value)}
+                      onFocus={() => setFocusedField("title")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("title")}
+                      placeholder="e.g. Senior React Developer"
+                      required
+                    />
+                  </div>
 
-                {/* Job Link */}
-                <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2 flex items-center">
-                    <Link className="w-4 h-4 mr-2" />
-                    Job Link
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.jobLink}
-                    onChange={(e) => handleInputChange('jobLink', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all"
-                    placeholder="https://careers.company.com/job/123"
-                  />
-                </div>
+                  {/* Company */}
+                  <div>
+                    <FieldLabel required>Company</FieldLabel>
+                    <input
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => handleInputChange("company", e.target.value)}
+                      onFocus={() => setFocusedField("company")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("company")}
+                      placeholder="e.g. Google, Microsoft"
+                      required
+                    />
+                  </div>
 
-                {/* Status */}
-                <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2">
-                    Current Status
-                  </label>
-                  <select
-                    value={formData.status}
-                    onChange={(e) => handleInputChange('status', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all"
-                  >
-                    {statusOptions.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                  {/* URL */}
+                  <div>
+                    <FieldLabel icon={Link}>URL</FieldLabel>
+                    <input
+                      type="url"
+                      value={formData.jobLink}
+                      onChange={(e) => handleInputChange("jobLink", e.target.value)}
+                      onFocus={() => setFocusedField("jobLink")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("jobLink")}
+                      placeholder="https://careers.company.com/job/123"
+                    />
+                  </div>
 
-                {/* Notes */}
-                <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2 flex items-center">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Notes
-                  </label>
-                  <textarea
-                    value={formData.notes}
-                    onChange={(e) => handleInputChange('notes', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all resize-none"
-                    rows={4}
-                    placeholder="HR call done, Asked DSA questions, Technical round completed..."
-                  />
-                </div>
+                  {/* Location */}
+                  <div>
+                    <FieldLabel icon={MapPin}>Location</FieldLabel>
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => handleInputChange("location", e.target.value)}
+                      onFocus={() => setFocusedField("location")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("location")}
+                      placeholder="e.g. Bangalore, Remote"
+                    />
+                  </div>
 
-                {/* Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={onClose}
-                    className="flex-1"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={applyMutation.isPending}
-                    className="flex-1"
-                  >
-                    {applyMutation.isPending ? "Adding..." : "Add Application"}
-                  </Button>
+                  {/* Status */}
+                  <div>
+                    <FieldLabel>Status</FieldLabel>
+                    <select
+                      value={formData.status}
+                      onChange={(e) => handleInputChange("status", e.target.value)}
+                      onFocus={() => setFocusedField("status")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("status")}
+                    >
+                      {statusOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Priority */}
+                  <div>
+                    <FieldLabel icon={Star}>Priority</FieldLabel>
+                    <select
+                      value={formData.priority}
+                      onChange={(e) => handleInputChange("priority", e.target.value)}
+                      onFocus={() => setFocusedField("priority")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("priority")}
+                    >
+                      {priorityOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Deadline */}
+                  <div>
+                    <FieldLabel icon={Calendar}>Deadline</FieldLabel>
+                    <input
+                      type="date"
+                      value={formData.deadline}
+                      onChange={(e) => handleInputChange("deadline", e.target.value)}
+                      onFocus={() => setFocusedField("deadline")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass + " [color-scheme:dark]"}
+                      style={getFieldStyle("deadline")}
+                    />
+                  </div>
+
+                  {/* Follow-up */}
+                  <div>
+                    <FieldLabel icon={Bell}>Follow-up</FieldLabel>
+                    <input
+                      type="date"
+                      value={formData.followUp}
+                      onChange={(e) => handleInputChange("followUp", e.target.value)}
+                      onFocus={() => setFocusedField("followUp")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass + " [color-scheme:dark]"}
+                      style={getFieldStyle("followUp")}
+                    />
+                  </div>
+
+                  {/* Salary */}
+                  <div>
+                    <FieldLabel icon={DollarSign}>Salary</FieldLabel>
+                    <input
+                      type="text"
+                      value={formData.salary}
+                      onChange={(e) => handleInputChange("salary", e.target.value)}
+                      onFocus={() => setFocusedField("salary")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("salary")}
+                      placeholder="e.g. 6-8 LPA"
+                    />
+                  </div>
+
+                  {/* Source */}
+                  <div>
+                    <FieldLabel icon={Globe}>Source</FieldLabel>
+                    <select
+                      value={formData.source}
+                      onChange={(e) => handleInputChange("source", e.target.value)}
+                      onFocus={() => setFocusedField("source")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("source")}
+                    >
+                      {sourceOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Contact Person */}
+                  <div>
+                    <FieldLabel icon={User}>Contact Person</FieldLabel>
+                    <input
+                      type="text"
+                      value={formData.contactPerson}
+                      onChange={(e) => handleInputChange("contactPerson", e.target.value)}
+                      onFocus={() => setFocusedField("contactPerson")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("contactPerson")}
+                      placeholder="e.g. Priya Sharma"
+                    />
+                  </div>
+
+                  {/* Contact Email */}
+                  <div>
+                    <FieldLabel icon={Mail}>Contact Email</FieldLabel>
+                    <input
+                      type="email"
+                      value={formData.contactEmail}
+                      onChange={(e) => handleInputChange("contactEmail", e.target.value)}
+                      onFocus={() => setFocusedField("contactEmail")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass}
+                      style={getFieldStyle("contactEmail")}
+                      placeholder="hr@company.com"
+                    />
+                  </div>
+
+                  {/* Notes - full width */}
+                  <div className="md:col-span-2">
+                    <FieldLabel icon={FileText}>Notes</FieldLabel>
+                    <textarea
+                      value={formData.notes}
+                      onChange={(e) => handleInputChange("notes", e.target.value)}
+                      onFocus={() => setFocusedField("notes")}
+                      onBlur={() => setFocusedField(null)}
+                      className={fieldClass + " !h-24 py-2.5 resize-none"}
+                      style={getFieldStyle("notes")}
+                      rows={3}
+                      placeholder="HR call done, Asked DSA questions, Technical round completed..."
+                    />
+                  </div>
                 </div>
-              </form>
-            </motion.div>
+              </div>
+
+              {/* Footer */}
+              <div
+                className="flex items-center justify-between px-6 py-4"
+                style={{ borderTop: "1px solid rgba(255,255,255,.06)" }}
+              >
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="h-11 px-5 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-colors duration-150"
+                  style={{ background: "#2A2E35" }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={applyMutation.isPending}
+                  className="h-11 px-6 rounded-lg text-sm font-semibold text-black/85 transition-opacity duration-150 disabled:opacity-60"
+                  style={{ background: "linear-gradient(135deg, #F2C744 0%, #E4572E 100%)" }}
+                >
+                  {applyMutation.isPending ? "Saving..." : "Save"}
+                </button>
+              </div>
+            </form>
           </div>
         </motion.div>
       </motion.div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33% { transform: translateY(-20px) rotate(1deg); }
-          66% { transform: translateY(10px) rotate(-1deg); }
-        }
-      `}</style>
     </AnimatePresence>
   );
 }
