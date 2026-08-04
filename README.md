@@ -1,4 +1,13 @@
 # tanu
+![react](https://img.shields.io/badge/react-18-blue)
+![typescript](https://img.shields.io/badge/typescript-5-blue)
+![fastify](https://img.shields.io/badge/fastify-node-black)
+![vercel](https://img.shields.io/badge/deployed-vercel-black)
+![render](https://img.shields.io/badge/backend-render-46E3B7)
+![openrouter](https://img.shields.io/badge/ai-openrouter-purple)
+
+🌐 **live demo:** https://tanu-ai.vercel.app/
+⚙️ **backend api:** https://tanu-api-z8ei.onrender.com
 
 an ai career companion built to simplify the job search.
 
@@ -27,7 +36,7 @@ that's how tanu came to life.
 - smart job matching
 - application notes and history
 - progress dashboard with analytics
-- clean, responsive and modern interface
+- responsive and modern interface
 
 ---
 
@@ -47,9 +56,8 @@ that's how tanu came to life.
 
 ### ai & integrations
 - openrouter
-- openai-compatible models
 - langchain
-- adzuna jobs api
+- adzuna api
 
 ### deployment
 - vercel
@@ -57,9 +65,102 @@ that's how tanu came to life.
 
 ---
 
+## project structure
+
+```text
+tanu/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── store/
+│   │   ├── lib/
+│   │   └── assets/
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── backend/
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── lib/
+│   │   ├── data/
+│   │   └── index.ts
+│   ├── package.json
+│   └── tsconfig.json
+│
+└── README.md
+```
+
+---
+
+## getting started
+
+clone the repository
+
+```bash
+git clone https://github.com/helloayushhh/tanu-ai.git
+cd tanu-ai
+```
+
+install dependencies
+
+```bash
+cd frontend
+npm install
+
+cd ../backend
+npm install
+```
+
+run backend
+
+```bash
+cd backend
+npm run dev
+```
+
+run frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+frontend
+
+```
+http://localhost:5173
+```
+
+backend
+
+```
+http://localhost:3001
+```
+
+---
+
+## deployment
+
+frontend
+
+- vercel
+
+backend
+
+- render
+
+ai provider
+
+- openrouter
+
+---
+
 ## what i'm learning
 
-this project is helping me understand what it actually takes to build and ship a production-ready product.
+this project is helping me understand what it actually takes to build and ship production-ready software.
 
 through tanu i'm learning backend architecture, api design, ai integration, deployment, state management and how to build products around real user problems instead of just features.
 
@@ -69,12 +170,14 @@ through tanu i'm learning backend architecture, api design, ai integration, depl
 
 - ats resume scoring
 - ai resume feedback
-- interview preparation
 - cover letter generation
+- interview preparation
 - company research
 - salary insights
 - interview reminders
 - personalized career roadmap
+- authentication
+- database integration
 
 ---
 
