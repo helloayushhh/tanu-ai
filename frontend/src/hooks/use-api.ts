@@ -3,8 +3,8 @@ import type { JobFilters } from "../store";
 
 // ✅ Use environment variable (works for Vercel + local)
 const API_BASE =
-  import.meta.env.VITE_API_BASE ||
-  "https://jobtracker-backend-1tar.onrender.com";
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3001";
 
 // ---------------- TYPES ----------------
 
