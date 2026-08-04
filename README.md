@@ -1,57 +1,93 @@
 # tanu
 
-making job hunting a little less overwhelming.
+an ai career companion built to simplify the job search.
+
+instead of managing applications across spreadsheets, job portals and random notes, tanu brings everything into one place and helps you stay focused on what matters most.
 
 ---
 
 ## why i built this
 
-during placements, i found myself jumping between spreadsheets, job portals, resumes and interview notes.
+job hunting can get messy very quickly.
 
-i wanted one place that could organize everything and also help me make better decisions along the way.
+while preparing for internships and placements, i realized i was spending more time organizing information than actually applying or preparing.
 
-that's how tanu started.
+i wanted a workspace that could track every application, manage resumes, recommend relevant jobs and use ai to make the entire process smarter.
 
----
-
-## what it can do
-
-- track every application
-- organize resumes and job details
-- discover relevant opportunities
-- get ai-powered career insights
-- follow your progress through a simple dashboard
+that's how tanu came to life.
 
 ---
 
-## built with
+## features
 
+- application tracking with complete status workflow
+- ai-powered career assistant
+- resume upload and skill extraction
+- personalized job recommendations
+- smart job matching
+- application notes and history
+- progress dashboard with analytics
+- clean, responsive and modern interface
+
+---
+
+## tech stack
+
+### frontend
 - react
 - typescript
-- fastify
+- vite
 - tailwind css
-- openai api
+- tanstack react query
+
+### backend
+- fastify
+- node.js
+- typescript
+
+### ai & integrations
+- openrouter
+- openai-compatible models
+- langchain
+- adzuna jobs api
+
+### deployment
+- vercel
+- render
 
 ---
 
 ## what i'm learning
 
-tanu is also helping me learn how to build larger products.
+this project is helping me understand what it actually takes to build and ship a production-ready product.
 
-i'm exploring backend architecture, ai integration, authentication and product design while continuously improving the experience.
+through tanu i'm learning backend architecture, api design, ai integration, deployment, state management and how to build products around real user problems instead of just features.
 
 ---
 
-## what's next
+## roadmap
 
-- resume analysis
+- ats resume scoring
+- ai resume feedback
 - interview preparation
-- smarter job matching
-- company insights
+- cover letter generation
+- company research
+- salary insights
+- interview reminders
 - personalized career roadmap
 
 ---
 
-see you in the next build.
+## current status
+
+currently under active development.
+
+new features, improvements and experiments are added regularly as i continue building and learning.
+
+---
+
+thanks for stopping by.
+
+always building.
 
 — aps
