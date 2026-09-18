@@ -68,7 +68,7 @@ that's how tanu came to life.
 ## project structure
 
 ```text
-tanu/
+tanu-ai/
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -90,7 +90,14 @@ tanu/
 │   ├── package.json
 │   └── tsconfig.json
 │
-└── README.md
+├── docs/
+│   ├── Tanu_BRD_v1.0.docx
+│   ├── Tanu_PRD_v1.0.docx
+│   └── Tanu_TRD_v1.0.docx
+│
+├── .gitignore
+├── README.md
+└── project_journey.md
 ```
 
 ---
@@ -121,7 +128,7 @@ cd backend
 npm run dev
 ```
 
-run frontend
+run the frontend in a separate terminal:
 
 ```bash
 cd frontend
@@ -140,57 +147,55 @@ backend
 http://localhost:3001
 ```
 
+environment variables are required for the external services used by the application.
+
+---
+
+## documentation
+
+the project is documented beyond this readme.
+
+- **brd** — business problem, users and product scope
+- **prd** — product requirements and user flows
+- **trd** — technical requirements and implementation direction
+- **project journey** — phase-by-phase development journey
+
+the detailed documentation is available in the `docs/` folder and `project_journey.md`.
+
 ---
 
 ## deployment
 
-frontend
+the current version is deployed with:
 
-- vercel
-
-backend
-
-- render
-
-ai provider
-
-- openrouter
-
----
-
-## what i'm learning
-
-this project is helping me understand what it actually takes to build and ship production-ready software.
-
-through tanu i'm learning backend architecture, api design, ai integration, deployment, state management and how to build products around real user problems instead of just features.
-
----
-
-## roadmap
-
-- ats resume scoring
-- ai resume feedback
-- cover letter generation
-- interview preparation
-- company research
-- salary insights
-- interview reminders
-- personalized career roadmap
-- authentication
-- database integration
+- **frontend:** vercel
+- **backend:** render
+- **ai:** openrouter
+- **job data:** adzuna api
 
 ---
 
 ## current status
 
-currently under active development.
+**completed and deployed.**
 
-new features, improvements and experiments are added regularly as i continue building and learning.
+the current version represents the completed scope of the project. future ideas are listed separately and are not presented as existing features.
 
 ---
 
-thanks for stopping by.
+## next possibilities
 
-always building.
+these are future ideas, not current features:
+
+- ats resume scoring
+- ai resume feedback
+- cover letter generation
+- interview preparation
+- company insights
+- personalized career roadmap
+
+---
+
+see you in the next build.
 
 — aps
