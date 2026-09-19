@@ -17,39 +17,42 @@
 
 <p align="center">
   <a href="https://tanu-ai.vercel.app/">live demo</a> ·
-  <a href="#-overview">overview</a> ·
-  <a href="#-features">features</a> ·
-  <a href="#-technology">technology</a> ·
-  <a href="#-quick-start">quick start</a> ·
-  <a href="#-documentation">documentation</a>
+  <a href="#overview">overview</a> ·
+  <a href="#highlights">highlights</a> ·
+  <a href="#technology">technology</a> ·
+  <a href="#dashboard">dashboard</a> ·
+  <a href="#quick-start">quick start</a> ·
+  <a href="#documentation">documentation</a>
 </p>
 
 ---
 
-## 📌 overview
+## overview
 
 **TanuAI** is an AI-powered career companion that brings the job-search workflow into one focused workspace.
 
-It combines application tracking, resume management, job discovery, job matching, and AI assistance so users can spend less time organizing their search and more time applying and preparing.
+Instead of managing applications across spreadsheets, job portals, resumes, and scattered notes, TanuAI combines application tracking, resume management, job discovery, job matching, and AI assistance in one place.
+
+The project was built to make the job-search process easier to organize and more focused.
 
 ---
 
-## ✨ highlights
+## highlights
 
-|    | Feature                  | Description                                                 |
-| -- | ------------------------ | ----------------------------------------------------------- |
-| 📋 | **Application tracking** | Manage applications through a structured status workflow    |
-| 🤖 | **AI career assistant**  | AI-powered assistance throughout the career-search workflow |
-| 📄 | **Resume intelligence**  | Upload resumes and extract relevant skills                  |
-| 🔎 | **Job discovery**        | Discover opportunities through the Adzuna API               |
-| 🎯 | **Smart matching**       | Match opportunities with career information                 |
-| 📝 | **Application history**  | Keep notes and application information organized            |
-| 📊 | **Progress dashboard**   | Track application activity and progress                     |
-| 📱 | **Responsive UI**        | Modern interface across screen sizes                        |
+| Feature                  | Description                                              |
+| ------------------------ | -------------------------------------------------------- |
+| **Application tracking** | Manage applications through a structured status workflow |
+| **AI career assistant**  | AI-powered assistance for the career-search workflow     |
+| **Resume intelligence**  | Upload resumes and extract relevant skills               |
+| **Job discovery**        | Discover opportunities through the Adzuna API            |
+| **Smart matching**       | Match opportunities with career information              |
+| **Application history**  | Keep notes and application information organized         |
+| **Progress dashboard**   | Track application activity and progress                  |
+| **Responsive interface** | Modern interface across screen sizes                     |
 
 ---
 
-## 🛠️ technology
+## technology
 
 | Layer             | Technology                               |
 | ----------------- | ---------------------------------------- |
@@ -58,23 +61,23 @@ It combines application tracking, resume management, job discovery, job matching
 | **Backend**       | Fastify, Node.js, TypeScript             |
 | **AI**            | OpenRouter, LangChain                    |
 | **Job data**      | Adzuna API                               |
-| **Deployment**    | Vercel + Render                          |
+| **Deployment**    | Vercel, Render                           |
 
 ---
 
-## 🖥️ web dashboard
+## dashboard
 
-The dashboard brings the core job-search workflow into one place — applications, opportunities, career information, progress, and AI assistance.
+The dashboard provides the main workspace for managing applications, discovering opportunities, viewing progress, and accessing career assistance.
 
 <p align="center">
   <img src="docs/assets/web-dashboard.png" alt="TanuAI Web Dashboard" width="850" />
 </p>
 
-**Live demo:** https://tanu-ai.vercel.app/
+[Live application](https://tanu-ai.vercel.app/)
 
 ---
 
-## 🚀 quick start
+## quick start
 
 ### prerequisites
 
@@ -82,7 +85,7 @@ The dashboard brings the core job-search workflow into one place — application
 * npm
 * API credentials for the external services used by the application
 
-### 1. clone
+### 1. clone the repository
 
 ```bash
 git clone https://github.com/helloayushhh/tanu-ai.git
@@ -103,9 +106,9 @@ npm install
 
 Add the required API credentials to the backend environment.
 
-> Keep API keys out of source control.
+Keep API keys out of source control.
 
-### 4. run backend
+### 4. run the backend
 
 ```bash
 cd backend
@@ -118,9 +121,9 @@ Backend:
 http://localhost:3001
 ```
 
-### 5. run frontend
+### 5. run the frontend
 
-In a separate terminal:
+Open a separate terminal:
 
 ```bash
 cd frontend
@@ -135,77 +138,50 @@ http://localhost:5173
 
 ---
 
-## 📁 project structure
+## documentation
+
+TanuAI is documented beyond the README.
 
 ```text
-tanu-ai/
-├── frontend/
-│   ├── public/
-│   └── src/
-│       ├── components/
-│       ├── hooks/
-│       ├── pages/
-│       ├── store/
-│       ├── lib/
-│       └── assets/
-│
-├── backend/
-│   └── src/
-│       ├── routes/
-│       ├── lib/
-│       ├── data/
-│       └── index.ts
-│
-├── docs/
-│   ├── assets/
-│   ├── Tanu_BRD_v1.0.docx
-│   ├── Tanu_PRD_v1.0.docx
-│   └── Tanu_TRD_v1.0.docx
-│
-├── README.md
-└── project_journey.md
+docs/
+├── Tanu_BRD_v1.0.docx
+├── Tanu_PRD_v1.0.docx
+├── Tanu_TRD_v1.0.docx
+└── assets/
+
+project_journey.md
 ```
 
----
-
-## 📚 documentation
-
-The project is documented beyond this README:
-
-* **BRD** — business problem, users, objectives, and scope
+* **BRD** — business problem, users, objectives, and product scope
 * **PRD** — product requirements and user flows
 * **TRD** — technical requirements and implementation direction
 * **Project Journey** — phase-by-phase development process
-* **Assets** — dashboard and project visuals
-
-Detailed documentation is available in `docs/` and `project_journey.md`.
+* **Assets** — project visuals and screenshots
 
 ---
 
-## ☁️ deployment
+## deployment
 
-| Component    | Platform   |
-| ------------ | ---------- |
-| **Frontend** | Vercel     |
-| **Backend**  | Render     |
-| **AI**       | OpenRouter |
-| **Job data** | Adzuna API |
+The current version is deployed with:
 
-**Live application:** https://tanu-ai.vercel.app/
+| Component    | Platform / Service |
+| ------------ | ------------------ |
+| **Frontend** | Vercel             |
+| **Backend**  | Render             |
+| **AI**       | OpenRouter         |
+| **Job data** | Adzuna API         |
 
-**Backend API:** https://tanu-api-z8ei.onrender.com
+[Live application](https://tanu-ai.vercel.app/) · [Backend API](https://tanu-api-z8ei.onrender.com)
 
 ---
 
-## 📈 current status
+## current status
 
 **Completed and deployed.**
 
-The current version represents the completed project scope. Future ideas are listed separately and are not presented as existing features.
+The current version represents the completed scope of the project. Future ideas are intentionally kept separate from the features currently implemented.
 
----
-
-## 🔭 next possibilities
+### Future possibilities
 
 * ATS resume scoring
 * AI resume feedback
@@ -216,14 +192,6 @@ The current version represents the completed project scope. Future ideas are lis
 
 ---
 
-## 🔗 project links
-
-* **Live:** https://tanu-ai.vercel.app/
-* **Repository:** https://github.com/helloayushhh/tanu-ai
-* **Backend:** https://tanu-api-z8ei.onrender.com
-
----
-
-see you in the next build.
+See you in the next build.
 
 **— aps**
