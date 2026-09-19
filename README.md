@@ -20,14 +20,14 @@
   <a href="#overview">overview</a> ·
   <a href="#highlights">highlights</a> ·
   <a href="#technology">technology</a> ·
-  <a href="#dashboard">dashboard</a> ·
   <a href="#quick-start">quick start</a> ·
+  <a href="#project-structure">project structure</a> ·
   <a href="#documentation">documentation</a>
 </p>
 
 ---
 
-## overview
+<h2 align="center">overview</h2>
 
 **TanuAI** is an AI-powered career companion that brings the job-search workflow into one focused workspace.
 
@@ -37,7 +37,7 @@ The project was built to make the job-search process easier to organize and more
 
 ---
 
-## highlights
+<h2 align="center">highlights</h2>
 
 | Feature                  | Description                                              |
 | ------------------------ | -------------------------------------------------------- |
@@ -52,7 +52,7 @@ The project was built to make the job-search process easier to organize and more
 
 ---
 
-## technology
+<h2 align="center">technology</h2>
 
 | Layer             | Technology                               |
 | ----------------- | ---------------------------------------- |
@@ -65,7 +65,7 @@ The project was built to make the job-search process easier to organize and more
 
 ---
 
-## dashboard
+<h2 align="center">dashboard</h2>
 
 The dashboard provides the main workspace for managing applications, discovering opportunities, viewing progress, and accessing career assistance.
 
@@ -77,7 +77,7 @@ The dashboard provides the main workspace for managing applications, discovering
 
 ---
 
-## quick start
+<h2 align="center">quick start</h2>
 
 ### prerequisites
 
@@ -138,7 +138,40 @@ http://localhost:5173
 
 ---
 
-## documentation
+<h2 align="center">project structure</h2>
+
+```text
+tanu-ai/
+├── frontend/
+│   ├── public/
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── store/
+│       ├── lib/
+│       └── assets/
+│
+├── backend/
+│   └── src/
+│       ├── routes/
+│       ├── lib/
+│       ├── data/
+│       └── index.ts
+│
+├── docs/
+│   ├── assets/
+│   ├── Tanu_BRD_v1.0.docx
+│   ├── Tanu_PRD_v1.0.docx
+│   └── Tanu_TRD_v1.0.docx
+│
+├── README.md
+└── project_journey.md
+```
+
+---
+
+<h2 align="center">documentation</h2>
 
 TanuAI is documented beyond the README.
 
@@ -160,7 +193,7 @@ project_journey.md
 
 ---
 
-## deployment
+<h2 align="center">deployment</h2>
 
 The current version is deployed with:
 
@@ -171,11 +204,11 @@ The current version is deployed with:
 | **AI**       | OpenRouter         |
 | **Job data** | Adzuna API         |
 
-[Live application](https://tanu-ai.vercel.app/) · [Backend API](https://tanu-api-z8ei.onrender.com)
+[Live application](https://tanu-ai.vercel.app/) · [Backend API](https://tanu-api-z8ei.onrender.com/)
 
 ---
 
-## current status
+<h2 align="center">current status</h2>
 
 **Completed and deployed.**
 
